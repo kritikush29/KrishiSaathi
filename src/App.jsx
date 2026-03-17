@@ -16,7 +16,7 @@ import MarketplacePage from './pages/MarketplacePage';
 import AgriStorePage from './pages/AgriStorePage';
 import InsurancePage from './pages/InsurancePage';
 import ChatSupportPage from './pages/ChatSupportPage';
-import KrishiSamacharPage from './pages/KrishiSamacharPage';
+import NewsletterPage from './pages/NewsletterPage';
 import SupportPage from './pages/SupportPage';
 import FloatingChatbot from './components/ui/FloatingChatbot';
 
@@ -33,7 +33,8 @@ function App() {
           <Route path="/store" element={<AgriStorePage />} />
           <Route path="/insurance" element={<InsurancePage />} />
           <Route path="/chat" element={<ChatSupportPage />} />
-          <Route path="/samachar" element={<KrishiSamacharPage />} />
+          <Route path="/samachar" element={<Navigate to="/newsletter" replace />} />
+          <Route path="/newsletter" element={<NewsletterPage />} />
 
           {/* Farmer Protected */}
           <Route path="/farmer" element={<ProtectedRoute role="farmer"><FarmerDashboard /></ProtectedRoute>} />

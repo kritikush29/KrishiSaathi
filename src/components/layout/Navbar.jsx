@@ -24,7 +24,7 @@ export default function Navbar() {
         { to: '/marketplace', label: t('navbar.marketplace') },
         { to: '/store', label: t('navbar.agri_store') },
         { to: '/insurance', label: t('navbar.insurance') },
-        { to: '/samachar', label: t('navbar.samachar') },
+        { to: '/newsletter', label: '📰 Newsletter' },
     ];
 
     const LanguageToggle = () => (
