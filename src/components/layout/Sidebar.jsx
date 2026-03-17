@@ -5,28 +5,27 @@ import { useAuth } from '../../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
 import {
     Sprout, LayoutDashboard, Package, Upload, ClipboardList,
-    CloudSun, DollarSign, ShoppingCart, Search, Store, Shield,
-    MessageCircle, LogOut, Menu, X, ChevronLeft, User
+    Store, Shield, HelpCircle, LogOut, Menu, X, ChevronLeft,
+    ShoppingCart, Newspaper
 } from 'lucide-react';
 
 const farmerLinks = [
-    { to: '/farmer', icon: LayoutDashboard, label: 'navbar.home' },
-    { to: '/farmer/listings', icon: Package, label: 'dashboard.my_listings' },
-    { to: '/farmer/upload', icon: Upload, label: 'dashboard.upload_crop' },
-    { to: '/farmer/orders', icon: ClipboardList, label: 'dashboard.orders' },
-    { to: '/marketplace', icon: ShoppingCart, label: 'navbar.marketplace' },
-    { to: '/store', icon: Store, label: 'navbar.agri_store' },
-    { to: '/insurance', icon: Shield, label: 'navbar.insurance' },
-    { to: '/chat', icon: MessageCircle, label: 'dashboard.support' },
+    { to: '/farmer', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/farmer/listings', icon: Package, label: 'My Listings' },
+    { to: '/farmer/upload', icon: Upload, label: 'Upload Crop' },
+    { to: '/farmer/orders', icon: ClipboardList, label: 'Orders' },
+    { to: '/farmer/store', icon: Store, label: 'Agri Store' },
+    { to: '/farmer/insurance', icon: Shield, label: 'Insurance' },
+    { to: '/farmer/support', icon: HelpCircle, label: 'Support' },
 ];
 
 const buyerLinks = [
-    { to: '/buyer', icon: LayoutDashboard, label: 'navbar.home' },
-    { to: '/marketplace', icon: ShoppingCart, label: 'navbar.marketplace' },
-    { to: '/buyer/orders', icon: ClipboardList, label: 'dashboard.my_orders' },
-    { to: '/store', icon: Store, label: 'navbar.agri_store' },
-    { to: '/insurance', icon: Shield, label: 'navbar.insurance' },
-    { to: '/chat', icon: MessageCircle, label: 'dashboard.support' },
+    { to: '/buyer', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/buyer/marketplace', icon: ShoppingCart, label: 'Marketplace' },
+    { to: '/buyer/orders', icon: ClipboardList, label: 'Orders' },
+    { to: '/buyer/store', icon: Store, label: 'Agri Store' },
+    { to: '/buyer/insurance', icon: Shield, label: 'Insurance' },
+    { to: '/buyer/support', icon: HelpCircle, label: 'Support' },
 ];
 
 export default function Sidebar() {
@@ -43,11 +42,18 @@ export default function Sidebar() {
         navigate('/');
     };
 
+    const isLinkActive = (linkTo) => {
+        if (linkTo === '/farmer' || linkTo === '/buyer') {
+            return location.pathname === linkTo;
+        }
+        return location.pathname.startsWith(linkTo);
+    };
+
     const SidebarContent = () => (
         <div className="flex flex-col h-full">
             {/* Logo */}
             <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                <Link to="/" className="flex items-center gap-2">
+                <Link to="/" className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center shadow-md flex-shrink-0">
                         <Sprout className="w-5 h-5 text-white" />
                     </div>
@@ -65,35 +71,56 @@ export default function Sidebar() {
             {!collapsed && user && (
                 <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white font-bold">
-                            {user.name.charAt(0)}
+                        <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white font-bold text-sm">
+                            {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="min-w-0">
                             <p className="text-sm font-semibold text-gray-800 truncate">{user.name}</p>
-                            <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                            <p className="text-xs text-primary-600 capitalize font-medium">{user.role === 'farmer' ? '👨‍🌾 Farmer' : '🏪 Buyer'}</p>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* Navigation Label */}
+            {!collapsed && (
+                <div className="px-5 pt-4 pb-1">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Navigation</p>
+                </div>
+            )}
+
             {/* Links */}
-            <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+            <nav className="flex-1 px-3 pb-3 space-y-1 overflow-y-auto">
                 {links.map(link => {
-                    const isActive = location.pathname === link.to;
+                    const active = isLinkActive(link.to);
                     return (
                         <Link
                             key={link.to}
                             to={link.to}
-                            className={isActive ? 'sidebar-link-active' : 'sidebar-link'}
+                            className={active ? 'sidebar-link-active' : 'sidebar-link'}
                             onClick={() => setMobileOpen(false)}
                             title={collapsed ? link.label : undefined}
                         >
                             <link.icon className="w-5 h-5 flex-shrink-0" />
-                            {!collapsed && <span className="text-sm">{t(link.label)}</span>}
+                            {!collapsed && <span className="text-sm">{link.label}</span>}
                         </Link>
                     );
                 })}
             </nav>
+
+            {/* Krishi Samachar link */}
+            {!collapsed && (
+                <div className="px-3 pb-2">
+                    <Link
+                        to="/samachar"
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-primary-50 to-earth-50 text-primary-700 hover:from-primary-100 hover:to-earth-100 transition-all font-medium"
+                        onClick={() => setMobileOpen(false)}
+                    >
+                        <Newspaper className="w-5 h-5 flex-shrink-0" />
+                        <span className="text-sm">Krishi Samachar</span>
+                    </Link>
+                </div>
+            )}
 
             {/* Logout */}
             <div className="p-3 border-t border-gray-100">
@@ -102,7 +129,7 @@ export default function Sidebar() {
                     className="sidebar-link text-red-500 hover:bg-red-50 hover:text-red-700 w-full"
                 >
                     <LogOut className="w-5 h-5 flex-shrink-0" />
-                    {!collapsed && <span className="text-sm">{t('dashboard.logout')}</span>}
+                    {!collapsed && <span className="text-sm">Logout</span>}
                 </button>
             </div>
         </div>
@@ -113,7 +140,7 @@ export default function Sidebar() {
             {/* Mobile toggle */}
             <button
                 onClick={() => setMobileOpen(true)}
-                className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-xl shadow-lg border border-gray-200"
+                className="lg:hidden fixed top-4 left-4 z-50 p-2.5 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow"
             >
                 <Menu className="w-5 h-5 text-gray-700" />
             </button>
@@ -126,7 +153,7 @@ export default function Sidebar() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
                             onClick={() => setMobileOpen(false)}
                         />
                         <motion.aside

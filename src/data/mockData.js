@@ -133,3 +133,29 @@ export const mockNews = [
         icon: '🚀'
     }
 ];
+
+export const mockSupportTickets = [
+    { id: 'TKT-001', subject: 'Payment not received for wheat order', category: 'Payment', priority: 'High', status: 'open', createdAt: '2026-03-15', lastUpdated: '2026-03-16' },
+    { id: 'TKT-002', subject: 'Unable to upload crop images', category: 'Technical', priority: 'Medium', status: 'in_progress', createdAt: '2026-03-12', lastUpdated: '2026-03-14' },
+    { id: 'TKT-003', subject: 'Wrong delivery address on order #3', category: 'Orders', priority: 'High', status: 'resolved', createdAt: '2026-03-08', lastUpdated: '2026-03-10' },
+];
+
+export const mockInsuranceClaims = [
+    { id: 'CLM-2026-001', plan: 'PM Fasal Bima Yojana', crop: 'Wheat', claimAmount: '₹25,000', status: 'approved', filedDate: '2026-02-20', settledDate: '2026-03-05' },
+    { id: 'CLM-2026-002', plan: 'Weather Based Insurance', crop: 'Rice', claimAmount: '₹40,000', status: 'under_review', filedDate: '2026-03-10', settledDate: null },
+];
+
+export const mockSavedItems = [
+    { id: 1, cropId: 1, name: 'Organic Wheat', farmer: 'Rajesh Kumar', price: '₹2,200 - ₹2,500/qt', location: 'Indore, MP', image: '/photos/organic wheat.jpg', savedAt: '2026-03-14' },
+    { id: 2, cropId: 5, name: 'Alphonso Mango', farmer: 'Prakash Desai', price: '₹5,000 - ₹7,000/qt', location: 'Ratnagiri, MH', image: '/photos/alphonso mango.jpg', savedAt: '2026-03-12' },
+    { id: 3, cropId: 9, name: 'Turmeric', farmer: 'Murugan S', price: '₹7,500 - ₹9,000/qt', location: 'Erode, TN', image: '/photos/turmeric.jpg', savedAt: '2026-03-10' },
+];
+
+export const mockFAQs = [
+    { q: 'How do I list my crops on KrishiSaathi?', a: 'Go to your Farmer Dashboard → Upload Crop, fill in the details like crop name, quantity, price, and upload images. Click "Publish Listing" to make it live.' },
+    { q: 'How does the bidding system work?', a: 'Buyers can place bids on listed crops. As a farmer, you can accept, reject, or negotiate bids from your Orders page.' },
+    { q: 'How do I apply for crop insurance?', a: 'Navigate to the Insurance section from your sidebar. Browse available plans and click "Apply Now" to submit your application.' },
+    { q: 'What payment methods are supported?', a: 'We support UPI, Net Banking, Debit/Credit cards, and direct bank transfers through our secure payment gateway powered by Razorpay.' },
+    { q: 'How can I track my order?', a: 'Go to Orders in your dashboard. Each order shows real-time status updates: Pending → Confirmed → Shipped → Delivered.' },
+    { q: 'Is my data secure on KrishiSaathi?', a: 'Yes, we use industry-standard encryption and secure servers. Your personal and financial data is never shared with third parties.' },
+];

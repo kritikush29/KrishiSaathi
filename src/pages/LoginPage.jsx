@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
-import { Sprout, Mail, Lock, Eye, EyeOff, ArrowRight, Phone } from 'lucide-react';
+import { Sprout, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import NotificationAlert from '../components/ui/NotificationAlert';
 
 export default function LoginPage() {
@@ -110,6 +110,22 @@ export default function LoginPage() {
                             )}
                         </button>
                     </form>
+
+                    {/* Social Login */}
+                    <div className="mt-6">
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
+                            <div className="relative flex justify-center text-sm"><span className="px-4 bg-white text-gray-500">or continue with</span></div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 mt-4">
+                            <button className="flex items-center justify-center gap-2 py-2.5 px-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700">
+                                <span className="text-lg">🔵</span> Google
+                            </button>
+                            <button className="flex items-center justify-center gap-2 py-2.5 px-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700">
+                                <span className="text-lg">🔷</span> Facebook
+                            </button>
+                        </div>
+                    </div>
 
                     <p className="text-center mt-6 text-sm text-gray-600">
                         {t('auth.no_account')}{' '}

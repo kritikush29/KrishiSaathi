@@ -80,14 +80,22 @@ export default function LandingPage() {
                                 {t('landing.hero_desc')}
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link to="/signup" className="btn-primary text-center flex items-center justify-center gap-2 text-lg">
-                                    {t('buttons.get_started')} <ArrowRight className="w-5 h-5" />
+                            {/* Role-based CTAs */}
+                            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                                <Link to="/login" className="group bg-white text-primary-700 font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
+                                    <span className="text-2xl">👨‍🌾</span> Login as Farmer <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Link>
-                                <Link to="/marketplace" className="btn-secondary text-center flex items-center justify-center gap-2 text-lg">
-                                    {t('buttons.explore_marketplace')}
+                                <Link to="/login" className="group bg-white/15 backdrop-blur-sm border-2 border-white/40 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:bg-white/25 active:scale-[0.98] flex items-center justify-center gap-3 text-lg">
+                                    <span className="text-2xl">🏪</span> Login as Buyer <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>
+
+                            <p className="text-sm text-gray-300">
+                                New here?{' '}
+                                <Link to="/signup" className="text-green-300 font-semibold hover:text-green-200 underline underline-offset-2">
+                                    Create a free account →
+                                </Link>
+                            </p>
 
                             <div className="flex items-center gap-8 mt-10 p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 w-fit">
                                 <div>
@@ -144,6 +152,51 @@ export default function LandingPage() {
                                     </div>
                                 </motion.div>
                             </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Role Selection Cards */}
+            <section className="section-padding bg-gradient-to-b from-white to-primary-50/30">
+                <div className="max-w-7xl mx-auto">
+                    <motion.div {...fadeUp} className="text-center mb-12">
+                        <span className="text-sm font-semibold text-primary-600 uppercase tracking-wider">Join As</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">Choose Your Role</h2>
+                        <p className="text-gray-600 max-w-xl mx-auto">Whether you grow crops or purchase them, KrishiSaathi has the right tools for you.</p>
+                    </motion.div>
+
+                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <motion.div {...stagger} transition={{ delay: 0.1 }}>
+                            <Link to="/signup" className="block group p-8 bg-white rounded-3xl border-2 border-gray-100 hover:border-primary-400 hover:shadow-2xl transition-all duration-300">
+                                <div className="text-6xl mb-4">👨‍🌾</div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">I'm a Farmer</h3>
+                                <p className="text-gray-600 mb-4">List your crops, get fair prices, access insurance & weather insights.</p>
+                                <ul className="space-y-2 text-sm text-gray-600">
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary-500" /> Upload & manage crop listings</li>
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary-500" /> Track orders & earnings</li>
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary-500" /> Access crop insurance</li>
+                                </ul>
+                                <div className="mt-6 flex items-center text-primary-600 font-semibold group-hover:gap-3 transition-all gap-2">
+                                    Get Started <ArrowRight className="w-5 h-5" />
+                                </div>
+                            </Link>
+                        </motion.div>
+
+                        <motion.div {...stagger} transition={{ delay: 0.2 }}>
+                            <Link to="/signup" className="block group p-8 bg-white rounded-3xl border-2 border-gray-100 hover:border-blue-400 hover:shadow-2xl transition-all duration-300">
+                                <div className="text-6xl mb-4">🏪</div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">I'm a Buyer</h3>
+                                <p className="text-gray-600 mb-4">Browse fresh crops, place bids, and get doorstep delivery.</p>
+                                <ul className="space-y-2 text-sm text-gray-600">
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-blue-500" /> Browse verified crop listings</li>
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-blue-500" /> Place bids & track orders</li>
+                                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-blue-500" /> Direct farmer contact</li>
+                                </ul>
+                                <div className="mt-6 flex items-center text-blue-600 font-semibold group-hover:gap-3 transition-all gap-2">
+                                    Get Started <ArrowRight className="w-5 h-5" />
+                                </div>
+                            </Link>
                         </motion.div>
                     </div>
                 </div>
