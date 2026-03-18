@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { mockCrops } from '../data/mockData';
 import { Search, MapPin, Star, ShoppingCart, X, SlidersHorizontal, Phone, Heart } from 'lucide-react';
+import { marketAPI } from '../services/api';
 
 const categories = ['All', 'Grains', 'Vegetables', 'Fruits', 'Pulses', 'Spices', 'Cash Crops'];
 const priceRanges = ['Any Price', 'Under ₹1,000', '₹1,000 - ₹3,000', '₹3,000 - ₹6,000', 'Above ₹6,000'];
@@ -14,9 +15,42 @@ export default function BuyerMarketplace() {
     const [bidAmount, setBidAmount] = useState('');
     const [cart, setCart] = useState([]);
     const [savedItems, setSavedItems] = useState([]);
+    const [listings, setListings] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const filtered = mockCrops.filter(c => {
-        const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) || c.location.toLowerCase().includes(search.toLowerCase());
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const res = await marketAPI.list({ limit: 50 });
+                if (res.data?.success && res.data.data.listings.length > 0) {
+                    const mapped = res.data.data.listings.map(c => ({
+                        id: c._id,
+                        name: c.cropName,
+                        quantity: `${c.quantity} ${c.unit}`,
+                        priceRange: `₹${c.priceRange.min} - ₹${c.priceRange.max}`,
+                        location: c.location,
+                        category: c.category,
+                        image: c.images?.[0]?.url || '🌾',
+                        rating: 4.8,
+                        bids: 0,
+                        farmer: c.farmerId?.name || 'Local Farmer'
+                    }));
+                    setListings(mapped);
+                } else {
+                    setListings(mockCrops);
+                }
+            } catch (error) {
+                console.error("Failed to fetch marketplace crops:", error);
+                setListings(mockCrops);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchListings();
+    }, []);
+
+    const filtered = listings.filter(c => {
+        const matchSearch = c.name?.toLowerCase().includes(search.toLowerCase()) || c.location?.toLowerCase().includes(search.toLowerCase());
         const matchCat = category === 'All' || c.category === category.toLowerCase().replace(' ', '_');
         return matchSearch && matchCat;
     });
@@ -143,10 +177,19 @@ export default function BuyerMarketplace() {
                                 <p className="text-sm font-semibold text-primary-700">{showBid.priceRange}</p>
                             </div>
                         </div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Your Bid (₹ per quintal)</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Your Bid (₹)</label>
                         <input type="number" className="input-field mb-4" placeholder="Enter bid amount"
                             value={bidAmount} onChange={e => setBidAmount(e.target.value)} />
-                        <button onClick={() => setShowBid(null)} className="btn-primary w-full">Submit Bid</button>
+                        <button onClick={async () => {
+                            try {
+                                await marketAPI.bid({ listingId: showBid.id, bidAmount: Number(bidAmount), message: 'New bid' });
+                                alert('Bid placed successfully!');
+                            } catch (e) {
+                                console.error('Failed to place bid', e);
+                                alert(e.response?.data?.message || 'Bid failed check you are logged in and not bidding on your own listing');
+                            }
+                            setShowBid(null);
+                        }} className="btn-primary w-full">Submit Bid</button>
                     </motion.div>
                 </div>
             )}

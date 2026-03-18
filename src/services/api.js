@@ -41,10 +41,10 @@ export const authAPI = {
 
 // ─── Crops (Farmer) ───
 export const cropAPI = {
-    add: (data) => api.post('/crops/add', data),
+    add: (data) => api.post('/crops/add', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
     myListings: () => api.get('/crops/my-listings'),
     get: (id) => api.get(`/crops/${id}`),
-    update: (id, data) => api.put(`/crops/${id}`, data),
+    update: (id, data) => api.put(`/crops/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } }),
     delete: (id) => api.delete(`/crops/${id}`),
 };
 

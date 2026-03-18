@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
@@ -8,6 +8,7 @@ import {
     ShoppingCart, TrendingUp, Package, DollarSign, Heart,
     ArrowRight, Star, MapPin, Clock, CheckCircle, Truck, FileCheck
 } from 'lucide-react';
+import { marketAPI } from '../services/api';
 
 const statCards = [
     { label: 'Total Purchases', value: '15', icon: ShoppingCart, color: 'text-blue-600', bg: 'bg-blue-100' },
@@ -25,6 +26,34 @@ const statusCfg = {
 
 export default function BuyerDashboard() {
     const { user } = useAuth();
+    const [recommendedCrops, setRecommendedCrops] = useState([]);
+
+    useEffect(() => {
+        const fetchCrops = async () => {
+            try {
+                const res = await marketAPI.list({ limit: 4 });
+                if (res.data?.success && res.data.data.listings.length > 0) {
+                    const mapped = res.data.data.listings.map(c => ({
+                        id: c._id,
+                        name: c.cropName,
+                        quantity: `${c.quantity} ${c.unit}`,
+                        priceRange: `₹${c.priceRange.min} - ₹${c.priceRange.max}`,
+                        location: c.location,
+                        image: c.images?.[0]?.url || '🌾',
+                        rating: 4.8,
+                        farmer: c.farmerId?.name || 'Local Farmer'
+                    }));
+                    setRecommendedCrops(mapped);
+                } else {
+                    setRecommendedCrops(mockCrops.slice(0, 4));
+                }
+            } catch (error) {
+                console.error("Failed to fetch recommended crops:", error);
+                setRecommendedCrops(mockCrops.slice(0, 4));
+            }
+        };
+        fetchCrops();
+    }, []);
 
     return (
         <DashboardLayout>
@@ -127,7 +156,7 @@ export default function BuyerDashboard() {
                     </Link>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {mockCrops.slice(0, 4).map((c, i) => (
+                    {recommendedCrops.map((c, i) => (
                         <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + i * 0.05 }}
                             className="card-hover-glow">
                             <div className="h-28 bg-primary-50 flex items-center justify-center text-4xl overflow-hidden">

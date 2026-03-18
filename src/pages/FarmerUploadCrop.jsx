@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { Upload, Plus, X, MapPin, Image, FileText } from 'lucide-react';
+import { cropAPI } from '../services/api';
 
 export default function FarmerUploadCrop() {
     const [form, setForm] = useState({
@@ -27,14 +28,37 @@ export default function FarmerUploadCrop() {
         setImages(prev => prev.filter((_, i) => i !== idx));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
+        try {
+            const formData = new FormData();
+            formData.append('cropName', form.name);
+            formData.append('quantity', form.quantity);
+            formData.append('unit', 'kg');
+            formData.append('priceRange', JSON.stringify({ min: Number(form.pricePerKg), max: Number(form.pricePerKg) }));
+            formData.append('location', form.location);
+            formData.append('description', form.description);
+            formData.append('category', form.category);
+
+            images.forEach(img => {
+                formData.append('images', img.file);
+            });
+
+            await cropAPI.add(formData);
+            
             setSuccess(true);
-            setTimeout(() => setSuccess(false), 3000);
-        }, 1500);
+            setTimeout(() => {
+                setSuccess(false);
+                setForm({ name: '', quantity: '', pricePerKg: '', location: '', description: '', category: 'grains' });
+                setImages([]);
+            }, 3000);
+        } catch (error) {
+            console.error('Error uploading crop:', error);
+            alert('Failed to list crop. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const categories = [
