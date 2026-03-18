@@ -81,4 +81,13 @@ export const insuranceAPI = {
     get: (id) => api.get(`/insurance/${id}`),
 };
 
+// ─── Disease Detection ───
+export const detectionAPI = {
+    predict: (formData) => api.post('/detection/predict', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        timeout: 30000,
+    }),
+    history: () => api.get('/detection/history'),
+};
+
 export default api;

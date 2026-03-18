@@ -40,4 +40,20 @@ const authorize = (...roles) => {
     };
 };
 
-module.exports = { auth, authorize };
+// Optional auth — attaches user if token present, but doesn't block guests
+const optionalAuth = async (req, res, next) => {
+    try {
+        const header = req.headers.authorization;
+        if (header && header.startsWith('Bearer ')) {
+            const token = header.split(' ')[1];
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await User.findById(decoded.id);
+            if (user) req.user = user;
+        }
+    } catch {
+        // Token invalid/expired — continue as guest
+    }
+    next();
+};
+
+module.exports = { auth, authorize, optionalAuth };

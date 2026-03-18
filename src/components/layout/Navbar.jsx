@@ -25,6 +25,7 @@ export default function Navbar() {
         { to: '/store', label: t('navbar.agri_store') },
         { to: '/insurance', label: t('navbar.insurance') },
         { to: '/samachar', label: t('navbar.samachar') },
+        { to: '/detect', label: t('navbar.detect') },
     ];
 
     const LanguageToggle = () => (

@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, MessageCircle, Send } from 'lucide-react';
 
 export default function FloatingChatbot() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { id: 1, text: t('chatbot.greeting'), sender: 'bot' }
@@ -15,6 +17,11 @@ export default function FloatingChatbot() {
 
     const handleOptionSelect = (optionText) => {
         setMessages([...messages, { id: Date.now(), text: optionText, sender: 'user' }]);
+        // Navigate to disease detection if that option is selected
+        if (optionText === t('chatbot.options.detect')) {
+            setIsOpen(false);
+            navigate('/detect');
+        }
     };
 
     const handleSend = (e) => {
@@ -30,6 +37,7 @@ export default function FloatingChatbot() {
         t('chatbot.options.weather'),
         t('chatbot.options.insurance'),
         t('chatbot.options.sell'),
+        t('chatbot.options.detect'),
     ];
 
     return (

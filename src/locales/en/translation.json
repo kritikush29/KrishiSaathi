@@ -8,7 +8,8 @@
     "signup": "Sign Up",
     "agri_store": "Agri Store",
     "insurance": "Insurance",
-    "samachar": "News & Schemes"
+    "samachar": "News & Schemes",
+    "detect": "Disease Detection"
   },
   "dashboard": {
     "my_crops": "My Crops",
@@ -96,7 +97,8 @@
       "prices": "Crop Prices",
       "weather": "Weather Updates",
       "insurance": "Crop Insurance Help",
-      "sell": "Sell Crops"
+      "sell": "Sell Crops",
+      "detect": "🔬 Detect Disease"
     }
   },
   "auth": {
@@ -129,5 +131,19 @@
     "address": "AgriTech Park, Pune, Maharashtra 411001",
     "rights": "© 2026 KrishiSaathi. All rights reserved.",
     "made_with": "Made with ❤️ for Indian Farmers"
+  },
+  "detection": {
+    "title": "Crop Disease Detection",
+    "desc": "Upload a photo of your crop leaf to instantly detect diseases and get treatment recommendations.",
+    "upload_title": "Upload Leaf Image",
+    "drop_text": "Click or drag & drop a leaf image here",
+    "analyze_btn": "Analyze Disease",
+    "analyzing": "Analyzing...",
+    "confidence": "Confidence",
+    "treatment": "Recommended Treatment",
+    "placeholder": "Results will appear here",
+    "placeholder_sub": "Upload a leaf image to start analysis",
+    "history": "Detection History",
+    "no_history": "No detection history yet. Upload your first leaf image to get started!"
   }
 }

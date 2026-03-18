@@ -16,6 +16,7 @@ const marketRoutes = require('./routes/marketRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const insuranceRoutes = require('./routes/insuranceRoutes');
+const detectionRoutes = require('./routes/detectionRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -70,6 +71,7 @@ app.use('/api/marketplace', marketRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/insurance', insuranceRoutes);
+app.use('/api/detection', detectionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
