@@ -1,6 +1,7 @@
 import Sidebar from './Sidebar';
 import { useAuth } from '../../hooks/useAuth';
 import { Bell, Search } from 'lucide-react';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 export default function DashboardLayout({ children }) {
     const { user } = useAuth();
@@ -26,6 +27,7 @@ export default function DashboardLayout({ children }) {
                             <Bell className="w-5 h-5 text-gray-500" />
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
+                        <LanguageSwitcher />
                         <div className="w-px h-6 bg-gray-200" />
                         <div className="flex items-center gap-2.5">
                             <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-white font-semibold text-xs">

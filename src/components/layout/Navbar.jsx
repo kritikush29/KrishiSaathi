@@ -8,6 +8,7 @@ import {
     LayoutDashboard, ShoppingCart, Shield, MessageCircle,
     ChevronDown, User
 } from 'lucide-react';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -24,21 +25,11 @@ export default function Navbar() {
         { to: '/marketplace', label: t('navbar.marketplace') },
         { to: '/store', label: t('navbar.agri_store') },
         { to: '/insurance', label: t('navbar.insurance') },
-        { to: '/samachar', label: t('navbar.samachar') },
+        { to: '/newsletter', label: t('navbar.samachar') || '📰 Newsletter' },
         { to: '/detect', label: t('navbar.detect') },
     ];
 
-    const LanguageToggle = () => (
-        <button
-            onClick={() => i18n.changeLanguage(i18n.resolvedLanguage === 'hi' ? 'en' : 'hi')}
-            className="px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-primary-700 transition-colors flex items-center gap-1 bg-gray-50 hover:bg-primary-50 rounded-lg mx-1"
-            title="Switch Language"
-        >
-            <span className={i18n.resolvedLanguage !== 'hi' ? 'font-bold text-primary-700' : ''}>English</span>
-            <span className="text-gray-300">|</span>
-            <span className={i18n.resolvedLanguage === 'hi' ? 'font-bold text-primary-700' : ''}>हिंदी</span>
-        </button>
-    );
+
 
     const handleLogout = () => {
         logout();
@@ -74,7 +65,7 @@ export default function Navbar() {
                             </Link>
                         ))}
                         <div className="h-4 w-px bg-gray-300 mx-1"></div>
-                        <LanguageToggle />
+                        <LanguageSwitcher />
                     </div>
 
                     {/* Auth Buttons */}
@@ -149,7 +140,7 @@ export default function Navbar() {
                     >
                         <div className="px-4 py-4 space-y-1">
                             <div className="flex justify-center mb-4">
-                                <LanguageToggle />
+                                <LanguageSwitcher />
                             </div>
                             {publicLinks.map(link => (
                                 <Link
