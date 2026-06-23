@@ -26,15 +26,21 @@ const server = http.createServer(app);
 
 // Dynamic CORS origin configuration
 const clientUrl = process.env.CLIENT_URL;
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'http://localhost:3000',
+    'https://krishi-saathi045.vercel.app',
+    'https://krishi-saathi045.vercel.app/'
+];
 if (clientUrl) {
     const trimmedUrl = clientUrl.trim();
-    allowedOrigins.push(trimmedUrl);
-    if (trimmedUrl.endsWith('/')) {
-        allowedOrigins.push(trimmedUrl.slice(0, -1));
-    } else {
-        allowedOrigins.push(trimmedUrl + '/');
+    if (!allowedOrigins.includes(trimmedUrl)) {
+        allowedOrigins.push(trimmedUrl);
     }
+    const cleanUrl = trimmedUrl.endsWith('/') ? trimmedUrl.slice(0, -1) : trimmedUrl;
+    const slashUrl = cleanUrl + '/';
+    if (!allowedOrigins.includes(cleanUrl)) allowedOrigins.push(cleanUrl);
+    if (!allowedOrigins.includes(slashUrl)) allowedOrigins.push(slashUrl);
 }
 
 // Socket.io setup
